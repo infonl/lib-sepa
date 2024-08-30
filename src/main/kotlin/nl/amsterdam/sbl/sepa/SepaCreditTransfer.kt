@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: INFO 2024
+ * SPDX-FileCopyrightText: 2024 INFO
  * SPDX-License-Identifier: EUPL-1.2+
  */
 
