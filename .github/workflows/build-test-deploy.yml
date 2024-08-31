@@ -1,0 +1,132 @@
+#
+# SPDX-FileCopyrightText: 2024 INFO
+# SPDX-License-Identifier: EUPL-1.2+
+#
+name: Build, test & deploy
+
+on:
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+# cancel any previous runs of this workflow for this branch that are still in progress
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  JAVA_VERSION: '21'
+  CONTAINER_REGISTRY_URL: 'ghcr.io/infonl'
+  APPLICATION_NAME: 'lib-sepa'
+
+permissions:
+  contents: write
+  packages: write
+  checks: write
+  pull-requests: write
+  # Required for uploading SARIF reports
+  security-events: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      branch_name: ${{ steps.gen_branch_name.outputs.BRANCH_NAME }}
+      build_number: ${{ steps.gen_build_number.outputs.BUILD_NUMBER }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set branch name
+        id: gen_branch_name
+        run: echo "BRANCH_NAME=${{ github.ref_name }}" | sed 's/\//_/g; s/(//g; s/)//g' >> $GITHUB_OUTPUT
+
+      - name: Set build number
+        id: gen_build_number
+        run: echo "BUILD_NUMBER=${{ steps.gen_branch_name.outputs.BRANCH_NAME }}-${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Gradle build
+        run: ./gradlew build -Pversion=${{ steps.gen_branch_name.outputs.BRANCH_NAME }}-${{ github.run_number }} --info
+
+      - name: Publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          check_name: unit-test-results
+          files: |
+            build/test-results/**/*.xml
+
+      - name: Cache Gradle build
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            build
+          key: build-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_number }}
+
+  dependabot-auto-merge:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    if: github.actor == 'dependabot[bot]'
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          # Our Dependabot PRs are not merged automatically because an automatically merged PR
+          # does not trigger our push workflow (and so no release would be made).
+          # see: https://github.com/fastify/github-action-merge-dependabot/issues/134
+          approve-only: true
+          target: minor
+
+  publish-release:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Restore Gradle build
+        uses: actions/cache/restore@v4
+        with:
+          path: build
+          key: build-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_number }}
+
+      # Determine the next semantic version based on the commit message tags
+      # See https://github.com/thenativeweb/get-next-version
+      - name: Get next version
+        id: get_next_version
+        uses: thenativeweb/get-next-version@2.6.3
+
+      - name: Gradle publish
+        run: ./gradlew publish -Pversion=${{ steps.get_next_version.outputs.version }} --info

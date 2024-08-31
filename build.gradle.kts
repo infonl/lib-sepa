@@ -1,5 +1,13 @@
+import java.net.URI
+
+/*
+ * SPDX-FileCopyrightText: 2024 INFO
+ * SPDX-License-Identifier: EUPL-1.2+
+*/
+
 plugins {
     java
+    `maven-publish`
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.detekt)
     alias(libs.plugins.xjc)
@@ -8,7 +16,16 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = URI("https://maven.pkg.github.com/infonl/stadsbank")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
+
 sourceSets {
     create("generated") {
         java {
@@ -17,8 +34,8 @@ sourceSets {
     }
 }
 
-group = "nl.info.lib-sepa"
-description = "SEPA clien library"
+group = "nl.amsterdam.stadsbank"
+description = "SEPA client library for Stadsbank van Lening Amsterdam"
 
 val javaVersion = JavaVersion.VERSION_21
 
