@@ -37,7 +37,7 @@ publishing {
     repositories {
         maven {
             name = "GitHub"
-            url = URI("https://maven.pkg.github.com/infonl/stadsbank")
+            url = URI("https://maven.pkg.github.com/infonl/lib-sepa")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
