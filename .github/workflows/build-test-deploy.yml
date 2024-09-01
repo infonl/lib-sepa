@@ -133,3 +133,5 @@ jobs:
 
       - name: Gradle publish
         run: ./gradlew jar publish -Pversion=${{ steps.get_next_version.outputs.version }} --info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
