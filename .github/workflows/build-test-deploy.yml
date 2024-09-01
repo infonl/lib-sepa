@@ -132,4 +132,4 @@ jobs:
         uses: thenativeweb/get-next-version@2.6.3
 
       - name: Gradle publish
-        run: ./gradlew publish -Pversion=${{ steps.get_next_version.outputs.version }} --info
+        run: ./gradlew jar publish -Pversion=${{ steps.get_next_version.outputs.version }} --info
