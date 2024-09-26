@@ -46,7 +46,7 @@ publishing {
     }
 }
 
-val javaVersion = JavaVersion.VERSION_21
+val javaVersion = JavaVersion.VERSION_18
 
 dependencies {
     implementation(libs.kotlin.stdlib)
