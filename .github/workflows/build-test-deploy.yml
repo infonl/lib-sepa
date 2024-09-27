@@ -101,7 +101,8 @@ jobs:
     timeout-minutes: 30
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -129,7 +130,11 @@ jobs:
       # See https://github.com/thenativeweb/get-next-version
       - name: Get next version
         id: get_next_version
-        uses: thenativeweb/get-next-version@2.6.3
+        uses: thenativeweb/get-next-version@main
+      - name: Show the next version
+        run: |
+          echo ${{ steps.get_next_version.outputs.version }}
+          echo ${{ steps.get_next_version.outputs.hasNextVersion }}
 
       - name: Gradle publish
         run: ./gradlew jar publish -Pversion=${{ steps.get_next_version.outputs.version }} --info
