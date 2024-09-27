@@ -67,7 +67,6 @@ tasks.named<JavaCompile>("compileGeneratedJava") {
     destinationDirectory.set(file("build/classes/generated"))
 }
 
-
 tasks.named("compileKotlin") {
     dependsOn(tasks.named("compileGeneratedJava"))
 }
