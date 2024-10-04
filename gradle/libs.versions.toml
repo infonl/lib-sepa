@@ -7,7 +7,7 @@
 detekt = "1.22.0"
 kotlin = "1.7.10"
 jaxb-api = "2.3.1"
-jaxb-impl = "4.0.3"
+jaxb-impl = "4.0.5"
 xjc = "2.0.0"
 oss-iban = "1.15.0"
 
