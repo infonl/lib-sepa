@@ -5,7 +5,7 @@
 
 [versions]
 detekt = "1.22.0"
-kotlin = "1.7.10"
+kotlin = "2.1.0"
 jaxb-api = "2.3.1"
 jaxb-impl = "4.0.3"
 xjc = "2.0.0"
