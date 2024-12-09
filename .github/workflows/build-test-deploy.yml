@@ -132,22 +132,23 @@ jobs:
         uses: rmeneely/git-next-version@v1
         with:
           tag_pattern: '[0-9]*.[0-9]*.[0-9]*'
+          increment: 'patch'
           auto_increment: 'true'
           auto_increment_minor_version_pattern: 'minor:|feature:|feat:'
 
       - name: Show the next version
         run: |
-          echo "current version: ${{ steps.get_next_version.outputs.LAST_VERSION }}"
-          echo "next version: ${{ steps.get_next_version.outputs.NEXT_VERSION }}"
+          echo "current version: ${{ env.LAST_VERSION }}"
+          echo "next version: ${{ env.NEXT_VERSION }}"
 
       - name: Gradle publish
-        run: ./gradlew jar publish -Pversion=${{ steps.get_next_version.outputs.NEXT_VERSION }} --info
+        run: ./gradlew jar publish -Pversion=${{ env.NEXT_VERSION }} --info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create tag for new version
-        if: ${{ steps.get_next_version.outputs.LAST_VERSION != steps.get_next_version.outputs.NEXT_VERSION }}
+        if: ${{ env.LAST_VERSION != env.NEXT_VERSION }}
         run: |
-          git tag ${{steps.get_next_version.outputs.NEXT_VERSION}}
-          git push origin ${{steps.get_next_version.outputs.NEXT_VERSION}}
+          git tag ${{ env.NEXT_VERSION }}
+          git push origin ${{ env.NEXT_VERSION }}
 
