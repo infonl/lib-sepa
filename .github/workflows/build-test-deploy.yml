@@ -127,10 +127,14 @@ jobs:
           key: build-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_number }}
 
       # Determine the next semantic version based on the commit message tags
-      # See https://github.com/thenativeweb/get-next-version
       - name: Get next version
         id: get_next_version
-        uses: thenativeweb/get-next-version@main
+        uses: rmeneely/git-next-version@v1
+        with:
+          tag_pattern: '[0-9]*.[0-9]*.[0-9]*'
+          auto_increment: 'true'
+          auto_increment_minor_version_pattern: 'minor:|feature:|feat:'
+
       - name: Show the next version
         run: |
           echo ${{ steps.get_next_version.outputs.version }}
