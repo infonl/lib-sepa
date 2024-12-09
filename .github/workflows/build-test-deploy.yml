@@ -129,7 +129,7 @@ jobs:
       # Determine the next semantic version based on the commit message tags
       - name: Get next version
         id: get_next_version
-        uses: rmeneely/git-next-version@v1
+        uses: rmeneely/git-next-version@137f4036fd148c7faf9d01b3b73e4345b38037f6 # v1.0.8
         with:
           tag_pattern: '[0-9]*.[0-9]*.[0-9]*'
           increment: 'patch'
