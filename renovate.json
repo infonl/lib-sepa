@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":separateMultipleMajorReleases",
+    ":separatePatchReleases",
+    ":pinDependencies",
+    ":maintainLockFilesWeekly",
+    ":automergeDigest",
+    "docker:pinDigests",
+    "docker:enableMajor"
+  ],
+  "reviewers": ["team:sbl"]
+}
