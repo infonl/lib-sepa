@@ -11,5 +11,5 @@
     "docker:pinDigests",
     "docker:enableMajor"
   ],
-  "reviewers": ["team:sbl"]
+  "reviewers": ["niorg"]
 }
