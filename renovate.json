@@ -12,5 +12,6 @@
     "docker:pinDigests",
     "docker:enableMajor"
   ],
-  "reviewers": ["team:sbl"]
+  "reviewers": ["team:sbl"],
+  "prConcurrentLimit": 5
 }
