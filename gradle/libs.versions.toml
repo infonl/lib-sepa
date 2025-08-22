@@ -4,7 +4,7 @@
 #
 
 [versions]
-detekt = "1.23.7"
+detekt = "1.23.8"
 kotlin = "2.1.10"
 jaxb-api = "2.3.1"
 jaxb-impl = "4.0.5"
