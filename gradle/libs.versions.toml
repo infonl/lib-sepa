@@ -9,7 +9,7 @@ kotlin = "2.1.21"
 jaxb-api = "2.3.1"
 jaxb-impl = "4.0.6"
 xjc = "2.0.0"
-oss-iban = "1.15.0"
+oss-iban = "1.16.0"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
