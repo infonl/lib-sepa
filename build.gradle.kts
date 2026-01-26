@@ -17,12 +17,9 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    create("generated") {
-        java {
-            srcDir("build/generated/sources/xjc/java/main")
-        }
-    }
+xjc {
+    xsdDir.set(layout.projectDirectory.dir("src/main/schema"))
+    useJakarta.set(false)
 }
 
 group = "nl.amsterdam.stadsbank"
@@ -58,17 +55,6 @@ dependencies {
 
 detekt {
     toolVersion = libs.versions.detekt.get()
-}
-
-tasks.named<JavaCompile>("compileGeneratedJava") {
-    dependsOn("xjcGenerate")
-    source = sourceSets["generated"].java
-    classpath = sourceSets["main"].compileClasspath
-    destinationDirectory.set(file("build/classes/generated"))
-}
-
-tasks.named("compileKotlin") {
-    dependsOn(tasks.named("compileGeneratedJava"))
 }
 
 // Place the schema file into the JAR
