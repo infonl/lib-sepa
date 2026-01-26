@@ -8,7 +8,7 @@ detekt = "1.23.8"
 kotlin = "2.2.21"
 jaxb-api = "2.3.1"
 jaxb-impl = "4.0.6"
-xjc = "2.0.0"
+xjc = "1.9.0"
 oss-iban = "1.16.0"
 
 [libraries]
@@ -21,5 +21,5 @@ oss-iban = { module = "nl.garvelink.oss:iban", version.ref = "oss-iban" }
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-xjc = { id = "org.unbroken-dome.xjc", version.ref = "xjc" }
+xjc = { id = "com.github.bjornvester.xjc", version.ref = "xjc" }
 
