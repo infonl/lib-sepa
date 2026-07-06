@@ -73,7 +73,7 @@ jobs:
             build/test-results/**/*.xml
 
       - name: Cache Gradle build
-        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             build
@@ -105,7 +105,7 @@ jobs:
         uses: gradle/actions/wrapper-validation@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
 
       - name: Restore Gradle build
-        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: build
           key: build-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_number }}
