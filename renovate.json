@@ -17,8 +17,14 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/(^|/)build\\.gradle\\.kts$/"],
-      "matchStrings": ["jvmToolchain\\((?<currentValue>\\d+)\\)"],
+      "managerFilePatterns": [
+        "/(^|/)build\\.gradle\\.kts$/",
+        "/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "jvmToolchain\\((?<currentValue>\\d+)\\)",
+        "JAVA_VERSION: '(?<currentValue>\\d+)'"
+      ],
       "depNameTemplate": "java",
       "datasourceTemplate": "java-version",
       "versioningTemplate": "docker"
