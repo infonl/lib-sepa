@@ -13,5 +13,15 @@
     "docker:enableMajor"
   ],
   "reviewers": ["niorg"],
-  "prConcurrentLimit": 5
+  "prConcurrentLimit": 5,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)build\\.gradle\\.kts$/"],
+      "matchStrings": ["jvmToolchain\\((?<currentValue>\\d+)\\)"],
+      "depNameTemplate": "java",
+      "datasourceTemplate": "java-version",
+      "versioningTemplate": "docker"
+    }
+  ]
 }
