@@ -5,18 +5,18 @@
 
 [versions]
 detekt = "1.23.8"
-kotlin = "2.3.21"
-jaxb-api = "2.3.1"
+kotlin = "1.9.23"
 jaxb-impl = "4.0.9"
 xjc = "1.9.1"
 oss-iban = "1.17.0"
+junit = "5.11.4"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
-jaxb-api = { module = "javax.xml.bind:jaxb-api", version.ref = "jaxb-api" }
-jaxb-core = { module = "org.glassfish.jaxb:jaxb-core", version.ref = "jaxb-impl" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime", version.ref = "jaxb-impl" }
 oss-iban = { module = "nl.garvelink.oss:iban", version.ref = "oss-iban" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

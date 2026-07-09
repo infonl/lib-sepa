@@ -19,7 +19,7 @@ repositories {
 
 xjc {
     xsdDir.set(layout.projectDirectory.dir("src/main/schema"))
-    useJakarta.set(false)
+    useJakarta.set(true)
 }
 
 group = "nl.amsterdam.stadsbank"
@@ -47,10 +47,14 @@ val javaVersion = JavaVersion.VERSION_18
 
 dependencies {
     implementation(libs.kotlin.stdlib)
-    implementation(libs.jaxb.api)
-    implementation(libs.jaxb.core)
     implementation(libs.jaxb.runtime)
     implementation(libs.oss.iban)
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 detekt {
