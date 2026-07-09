@@ -12,10 +12,13 @@ on:
     branches:
       - main
 
-# cancel any previous runs of this workflow for this branch that are still in progress
+# Cancel superseded runs on non-default branches (e.g. PRs), but never cancel
+# runs on main: publish-release uploads the jar and then pushes the matching git
+# tag, and cancelling between those steps orphans a published version (leading to
+# HTTP 409 Conflict on the next run). On main, runs queue instead of cancelling.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
   JAVA_VERSION: '21'
