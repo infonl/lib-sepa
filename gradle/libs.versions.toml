@@ -5,7 +5,7 @@
 
 [versions]
 detekt = "1.23.8"
-kotlin = "1.9.25"
+kotlin = "2.4.0"
 jaxb-impl = "4.0.9"
 xjc = "1.9.1"
 oss-iban = "1.17.0"
