@@ -26,7 +26,7 @@
       "depNameTemplate": "java",
       "datasourceTemplate": "java-version",
       "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "jvmToolchain({{{newMajor}}})"
+      "extractVersionTemplate": "^(?<version>\\d+)"
     },
     {
       "customType": "regex",
@@ -34,20 +34,12 @@
         "/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
-        "JAVA_VERSION: '(?<currentValue>\\d+)'"
+        "JAVA_VERSION: '(?<currentValue>\\d+\\.\\d+\\.\\d+)'"
       ],
       "depNameTemplate": "java",
       "datasourceTemplate": "java-version",
       "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "JAVA_VERSION: '{{{newMajor}}}'"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchDepNames": ["java"],
-      "matchDatasources": ["java-version"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "enabled": false
+      "extractVersionTemplate": "^(?<version>\\d+\\.\\d+\\.\\d+)"
     }
   ]
 }
