@@ -4,7 +4,7 @@
 #
 
 [versions]
-detekt = "1.23.8"
+detekt = "2.0.0-alpha.6"
 kotlin = "2.4.21"
 jaxb-impl = "4.0.9"
 xjc = "1.9.1"
@@ -20,6 +20,6 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 xjc = { id = "com.github.bjornvester.xjc", version.ref = "xjc" }
 
